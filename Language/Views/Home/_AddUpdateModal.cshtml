@@ -1,0 +1,33 @@
+﻿@model Language.Models.LanguageModel
+<!-- Modal -->
+
+@using (Html.BeginForm("Edit", "Language", FormMethod.Post))
+{
+    <div class="modal fade" id="modalAddUpdate" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add/Update Employee</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id="frmSaveData">
+                        <div class="form-group">
+                            <label>value mới:</label>
+                            @Html.EditorFor(model => model.value, new { htmlAttributes = new { @class = "form-control", @id = "txtValue", @name = "txtValue" } })
+                            <input type="hidden" id="hidID" value="0" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" value="Edit" class="btn btn-default">Cập nhập</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
