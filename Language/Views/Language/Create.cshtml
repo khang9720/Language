@@ -14,14 +14,15 @@
 <body>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
-    
-    
-    @using (Html.BeginForm("Create", "Language", FormMethod.Post)) 
+
+
+    @using (Html.BeginForm("Create", "Language", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             <h4>LanguageModel</h4>
+
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -31,7 +32,7 @@
                     @Html.ValidationMessageFor(model => model.key, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.value, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -39,15 +40,15 @@
                     @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" value="Create" class="btn btn-default" >Thêm</button>
+                    <button type="submit" value="Create" class="btn btn-default">Thêm</button>
                 </div>
             </div>
         </div>
     }
-    
+
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>

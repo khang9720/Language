@@ -2,6 +2,7 @@
     pageSize: 10,
     pageIndex: 1,
 }
+var valueB;
 var languageController = {
     init: function () {
         languageController.loadData();
@@ -31,44 +32,106 @@ var languageController = {
                 }
             })
         });
-        $('.a').off('click').on('click', function () {
-            bootbox.alert("This is the default alert!");
-        });
-        $('.btn-edit').off('click').on('click', function () {
-            $('#modalAddUpdate').modal('show');
-            var id = $(this).data('id');
-            languageController.loadDetail(id);
+        $('.btn-cancel').off('click').on('click', function () {
+            languageController.loadData();
         });
 
-    },
-    loadDetail: function (key) {
-        $.ajax({
-            url: '/language/Edit',
-            data: {
-                key: key
-            },
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                if (response.status == true) {
-                    var data = response.data;
-                    $('#txtKey').val(data.key);
-                    $('#txtValue').val(data.value);
-                    $('#ckStatus').prop('checked', data.Status);
+        //$('.btn-edit').off('click').on('click', function () {
+        //    document.getElementById("btn-save").disabled = false;
+            
+        //    var id = $(this).data('id');
+        //    languageController.loadDetail(id);
+        //    $('#modalAddUpdate').modal('show');
+        //});
+
+        $('.btn-edit').off('click').on('click', function () {
+            var key = $(this).data('id');
+            var sib = "td." + key;
+            var value;
+            var index = 0; 
+            $(this)
+                .parent()
+                .siblings(sib)
+                .each(function () {
+                    var content = $(this).html();
+                    if (index == 0) {
+                        valueB = content
+                    }
+                    $(this).html('<input  id="' + key + '" value="' + content + '" />');
+
+                    index++;
+                });
+            $(this).siblings(".btn-cancel").show();
+            $(this).siblings(".btn-save").show();
+            $(this).siblings(".btn-delete").hide();
+            $(this).hide();
+        });
+
+        $('.btn-save').off('click').on('click', function () {
+            var index = 0;
+            var value;
+            $("input").each(function () {
+                var content = $(this).val();
+                if (index == 0) {
+                    value = content;
                 }
-                else {
-                    bootbox.alert("XXXX");
-                }
-            },
-            error: function (err) {
-                console.log(err);
+                $(this).html(content);
+                $(this).contents().unwrap();
+                index++;
+            });
+            var key = $(this).data('id');
+
+            if (valueB == value) {
+                bootbox.alert("Thông tin chưa được thay đổi?")
+            }
+            else if (value == "") {
+                bootbox.alert("Value không được chống")
+            }
+            else {
+                
+                languageController.loadEdit(key, value);
+                $(this).siblings(".btn-edit").show();
+                $(this).siblings(".btn-delete").show();
+                $(this).siblings(".btn-cancel").hide();
+                $(this).hide();
+                bootbox.alert("Thay đổi thông tin thành công", function () {
+                    languageController.loadData();
+                });
             }
         });
     },
+    //loadDetail: function (key) {
+    //    $.ajax({
+    //        url: '/language/Edit',
+    //        data: {
+    //            key: key
+    //        },
+    //        type: 'GET',
+    //        dataType: 'json',
+    //        success: function (response) {
+    //            if (response.status == true) {
+    //                var key = "#"+response.key;
+    //                var data = response.data;
+    //                $('#txtKey').val(data.key);
+    //                $('#txtValue').val(data.value);
+    //                $('#ckStatus').prop('checked', data.Status);
+    //            }
+    //            else {
+    //                bootbox.alert("XXXX");
+    //            }
+    //        },
+    //        error: function (err) {
+    //            console.log(err);
+    //        }
+    //    });
+    //},
+    loadEdit: function (key, value) {
+        $.post("/language/Edit", { key: key, valueNew: value });
+    },
+
     loadData: function () {
         var name = $('#txtNameS').val();
         var status = $('#ddlStatusS').val();
-
         $.ajax({
             url: '/language/LoadData',
             type: 'GET',
@@ -82,6 +145,7 @@ var languageController = {
             success: function (response) {
                 if (response.status) {
                     var data = response.data;
+                    var data2 = response.data2;
                     var html = '';
                     var template = $('#data-template').html();
                     $.each(data, function (i, item) {
@@ -90,6 +154,7 @@ var languageController = {
                             Del: "@Html.ActionLink('Delete', 'Language', new {key = " + item.key + " })",
                             key: item.key,
                             value: item.value,
+                            value2: data2[i]["value"],
                             Status: item.Status == true ? "<span class=\"label label-success\">Actived</span>" : "<span class=\"label label-danger\">Locked</span>"
                         })
                     });
@@ -103,6 +168,7 @@ var languageController = {
         });
 
     },
+
     deleteList: function (key) {
         $.ajax({
             url: '/language/Delete',

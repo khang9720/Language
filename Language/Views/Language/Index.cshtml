@@ -16,7 +16,11 @@
 
     <!-- Custom styles for this template-->
     <link href="/Assets/Client/css/sb-admin-2.min.css" rel="stylesheet">
-
+<style>
+    .btn-save, .btn-cancel {
+        display: none;
+    }  
+</style>
 </head>
 
 <body>
@@ -48,25 +52,34 @@
                                             <th>#</th>
                                             <th>STT</th>
                                             <th>Key</th>
-                                            <th>Value</th>
+                                            <th>Value EN</th>
+                                            <th>Value KM</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbData"></tbody>
                                 </table>
+                                <div id="UpdateDiv"></div>
+
                                 <div id="pagination" class="pagination">
                                 </div>
                                 <script id="data-template" type="x-tmpl-mustache">
                                     <tr>
                                         <td>
-                                            <button  class="btn btn-primary btn-edit" data-id="{{key}}" data-toggle="modal" data-target="#modalAddUpdate">Edit</button>
-                                            <button class="btn btn-danger btn-delete" data-id="{{key}}">Delete</button>
+                                            @*<button  class="btn btn-primary btn-edit" data-id="{{key}}" data-toggle="modal" data-target="#modalAddUpdate">
+                                                Edit
+                                            </button>*@
+                                            <button class="btn btn-primary btn-edit " data-id="{{key}}">Edit</button>
+                                            <button class="btn btn-danger btn-delete" data-id="{{key}}" >Delete</button>
+                                            <button class="btn btn-success btn-save" type="submit" value="Edit" data-id="{{key}}" >Save</button>
+                                            <button class="btn btn-secondary btn-cancel" href="~/Language/Index.cshtml" >Cancel</button>
                                         </td>
                                         <td> {{index}} </td>
                                         <td> {{key}} </td>
-                                        <td> {{value}} </td>
+                                        <td class="{{key}}" id="{{key}}"> {{value}} </td>
+                                        <td> {{value2}} </td>
+
                                     </tr>
                                 </script>
-
                             </div>
                         </div>
                     </div>

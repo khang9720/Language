@@ -1,17 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LocalLanguages>
-  <data name="About1" xml:space="preserve">
-<value>Introduce</value>
-</data>
+  <data name="About" xml:space="preserve">
+    <value>Introduce</value>
+  </data>
   <data name="AboutItem1" xml:space="preserve">
-<value>Each +10 item increases the maximum number of members of the state to 10.</value>
-</data>
+    <value>Each +10 item increases the maximum number of members of the state to 10.</value>
+  </data>
   <data name="AboutItem2" xml:space="preserve">
-<value>Shelf life: permanent.</value>
-</data>
+    <value>Shelf life: permanent.</value>
+  </data>
   <data name="AboutItem3" xml:space="preserve">
-<value>For example: state level 4 the maximum number of members is 50. Buy 1 item +10 the maximum number of members will be 60.</value>
-</data>
-  <data name="AboutItem5">
-    <value>dsadsd</value>
+    <value>For example: state level 4 the maximum number of members is 50. Buy 1 item +10 the maximum number of members will be 60.</value>
   </data>
 </LocalLanguages>
